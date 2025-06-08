@@ -3,14 +3,7 @@ import pytest
 import polars as pl
 import numpy as np
 from sklearn.naive_bayes import GaussianNB
-from src.utils import (
-    load_data,
-    check_missing_values,
-    remove_outliers,
-    encode_categorical,
-    split_data,
-    train_and_evaluate_model
-)
+from src.utils import *
 
 def test_load_data(tmp_path):
     csv_path = tmp_path / "test.csv"
@@ -22,8 +15,12 @@ def test_load_data(tmp_path):
 def test_check_missing_values():
     df = pl.DataFrame({"a": [1, None, 3], "b": [4, 5, None]})
     result = check_missing_values(df)
-    assert result.select(pl.col("a")).item() == 1
-    assert result.select(pl.col("b")).item() == 1
+
+    # Convertimos a diccionario para comparar más fácilmente
+    missing_dict = dict(zip(result.columns, result.row(0)))
+
+    assert missing_dict["a"] == 1
+    assert missing_dict["b"] == 1
 
 
 def test_remove_outliers():

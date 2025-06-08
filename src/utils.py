@@ -1,10 +1,8 @@
-
 import polars as pl
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB, MultinomialNB
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
-from category_encoders import OneHotEncoder
 from typing import Tuple, List
 
 def load_data(path: str) -> pl.DataFrame:
